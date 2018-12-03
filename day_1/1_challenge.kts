@@ -1,7 +1,7 @@
 import java.io.File
 import java.io.InputStream
 
-val fileLines: List<String> = File("./1_input.txt").readLines()
+val fileLines: List<String> = File("./input.txt").readLines()
 val result = fileLines
         .map{
             it.toInt()

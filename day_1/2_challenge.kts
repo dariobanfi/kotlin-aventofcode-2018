@@ -1,7 +1,7 @@
 import java.io.File
 import java.io.InputStream
 
-val numbers: List<Int> = File("./1_input.txt").readLines().map { it.toInt() }
+val numbers: List<Int> = File("./input.txt").readLines().map { it.toInt() }
 
 var frequency = 0
 
