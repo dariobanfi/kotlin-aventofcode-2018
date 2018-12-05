@@ -26,7 +26,7 @@ fun main(args : Array<String>) {
         }
     }
 
-    println("Solution ${input.joinToString("").length}")
+    println("Solution ${input.size}")
 }
 
 fun doAtomsReact(atom1: Char, atom2: Char): Boolean {
