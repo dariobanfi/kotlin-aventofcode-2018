@@ -26,13 +26,11 @@ fun main(args : Array<String>) {
         for (j in 0..matrix[i].size - 1) {
             if (matrix[i][j] == ".") {
                 matrix[i][j] = computeClosestPoint(matrix, coords, i, j)
-                if (i == 0 || j ==0 ) {
+                if (i == 0 || j ==0 || i == highestX || j == highestY) {
                     infiniteIds.add(matrix[i][j])
                 }
-//                print(matrix[i][j])
             }
         }
-//        println("")
     }
 
     val uniqueInfiniteIds = infiniteIds.distinct()
@@ -44,7 +42,7 @@ fun main(args : Array<String>) {
             .filter { !uniqueInfiniteIds.contains(it.key) }
             .maxBy { it.value }
 
-    println("Solution: ${solution}")
+    println("Solution: ${solution!!.value}")
 }
 
 fun computeClosestPoint(matrix: Array<Array<String>>, coords: List<Pair<Int, Int>>, i: Int, j: Int): String {
