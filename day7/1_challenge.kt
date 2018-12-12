@@ -19,24 +19,26 @@ fun main(args : Array<String>) {
 
     }
 
-    println(graph.map { "${it.value.id} ${it.value.edges}"})
+    println(graph.values.sortedBy { it.id }.map { "${it.id}: ${it.edges}\n"})
 
 
     // Find first task which no node depends on
-    var firstTask = ""
+    val firstTasks = mutableListOf<String>()
     for (key in graph.keys) {
         val first = graph.values.find { it.edges.contains(key) }?.id
         if (first == null) {
-            firstTask = key
+            firstTasks.add(key)
         } else {
             continue
         }
     }
 
+    println("firstTasks: $firstTasks")
+
     val visitQueue = PriorityQueue<String>();
     val sequence = mutableListOf<String>()
 
-    visitQueue.add(firstTask);
+    visitQueue.addAll(firstTasks);
 
 
     while(!visitQueue.isEmpty()) {
@@ -46,9 +48,7 @@ fun main(args : Array<String>) {
         val node = graph[visiting]
         for (edge in node!!.edges) {
             if (!sequence.contains(edge) && !visitQueue.contains(edge)) {
-                // Check if any graph in the queue has dependencies
-                val dependencies = visitQueue.map { graph[it]?.edges?.contains(edge) }
-                if (!dependencies.contains(true)) {
+                if (canBeAdded(graph, edge, sequence)) {
                     visitQueue.add(edge)
                 }
             }
@@ -57,7 +57,19 @@ fun main(args : Array<String>) {
 
     println("Solution is ${sequence.joinToString("")}")
 
+}
 
+fun canBeAdded(graph: MutableMap<String, Node>, edge: String, visited: MutableList<String>): Boolean {
+
+    val unvisitedNodes = graph.values.filter { !visited.contains(it.id) }
+
+    for (node in unvisitedNodes) {
+        if (node.edges.contains(edge)) {
+            return false;
+        }
+    }
+
+    return true;
 
 }
 
